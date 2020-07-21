@@ -9,7 +9,6 @@ namespace ProjetoModeloDDD.MVC.Controllers
 {
     public class ProdutosController : Controller
     {
-        // GET: Produtos
         private readonly IProdutoAppService _produtoApp;
         private readonly IClienteAppService _clienteApp;
 
