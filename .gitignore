@@ -1,0 +1,9 @@
+﻿################################################################################
+# This .gitignore file was automatically created by Microsoft(R) Visual Studio.
+################################################################################
+
+*.suo
+/ProjetoModeloDDD.Application/obj/Debug
+/ProjetoModeloDDD.Domain/obj/Debug
+/ProjetoModeloDDD.Infra.Data/obj/Debug
+/ProjetoModeloDDD.MVC/obj/Debug
