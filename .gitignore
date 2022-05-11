@@ -35,3 +35,5 @@ Version.h
 Version.cpp
 /ProjetoModeloDDD.MVC/App_Data/ProjetoModeloDDD_log.ldf
 /ProjetoModeloDDD.MVC/App_Data/ProjetoModeloDDD.mdf
+*.mdf
+*.ldf
