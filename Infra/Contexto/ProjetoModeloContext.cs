@@ -37,6 +37,9 @@ namespace ProjetoModeloDDD.Infra.Data.Contexto
 
             modelBuilder.Configurations.Add(new ClienteConfiguration());
             modelBuilder.Configurations.Add(new ProdutoConfiguration());
+
+            Database.SetInitializer<ProjetoModeloContext>(null);
+            base.OnModelCreating(modelBuilder);
         }
 
         public override int SaveChanges()

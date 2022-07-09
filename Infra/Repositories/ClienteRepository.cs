@@ -49,11 +49,6 @@ namespace ProjetoModeloDDD.Infra.Data.Repositories
         {
             var clientes = Db.Set<Cliente>().ToList();
 
-            if (!clientes.Any())
-            {
-                throw new ArgumentException("Não foi encontrado nenhum cliente na base !");
-            }
-
             return clientes;
         }
 

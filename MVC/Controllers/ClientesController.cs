@@ -5,6 +5,7 @@ using ProjetoModeloDDD.MVC.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Web.Mvc;
+using System.Web.Routing;
 
 namespace ProjetoModeloDDD.MVC.Controllers
 {
@@ -15,6 +16,15 @@ namespace ProjetoModeloDDD.MVC.Controllers
         public ClientesController(IClienteService clienteApp)
         {
             _clienteApp = clienteApp;
+        }
+
+        protected override void OnException(ExceptionContext filterContext)
+        {
+            TempData["Erro"] = filterContext.Exception.Message;
+
+            filterContext.Result = new RedirectToRouteResult(
+                                       new RouteValueDictionary(new { controller = "Clientes", action = "Index" }));
+            
         }
 
         public ActionResult Index()
@@ -35,18 +45,10 @@ namespace ProjetoModeloDDD.MVC.Controllers
 
         public ActionResult Detalhes(int id)
         {
-            try
-            {
-                var cliente = _clienteApp.ObterPorId(id);
-                var clienteViewModel = Mapper.Map<Cliente, ClienteViewModel>(cliente);
+            var cliente = _clienteApp.ObterPorId(id);
+            var clienteViewModel = Mapper.Map<Cliente, ClienteViewModel>(cliente);
 
-                return View(clienteViewModel);
-            }
-            catch (Exception ex)
-            {
-                ViewBag.Erro = ex.Message;
-                return RedirectToAction("Index");
-            }
+            return View(clienteViewModel);
         }
 
         public ActionResult Criar()
@@ -58,19 +60,12 @@ namespace ProjetoModeloDDD.MVC.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Criar(ClienteViewModel cliente)
         {
-            try
+            if (ModelState.IsValid)
             {
-                if (ModelState.IsValid)
-                {
-                    var clienteDomain = Mapper.Map<ClienteViewModel, Cliente>(cliente);
-                    _clienteApp.Adicionar(clienteDomain);
+                var clienteDomain = Mapper.Map<ClienteViewModel, Cliente>(cliente);
+                _clienteApp.Adicionar(clienteDomain);
 
-                    return RedirectToAction("Index");
-                }
-            }
-            catch (Exception ex)
-            {
-                ViewBag.Erro = ex.Message;
+                return RedirectToAction("Index");
             }
 
             return View(cliente);
@@ -110,14 +105,7 @@ namespace ProjetoModeloDDD.MVC.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            try
-            {
-                _clienteApp.Remover(id);
-            }
-            catch (Exception ex)
-            {
-                TempData["DeleteError"] = ex.Message;
-            }
+            _clienteApp.Remover(id);
             return RedirectToAction("Index");
         }
     }

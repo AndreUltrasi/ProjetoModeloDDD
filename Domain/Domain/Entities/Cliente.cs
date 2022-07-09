@@ -9,6 +9,7 @@ namespace ProjetoModeloDDD.Domain.Entities
         private string _sobrenome;
         private string _email;
 
+
         public int ClienteId { get; set; }
         public string Nome 
         { 

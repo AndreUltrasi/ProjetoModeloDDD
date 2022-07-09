@@ -14,9 +14,9 @@
     @Html.ActionLink("Clientes Especiais", "Especiais")
 </p>
 
-@if (TempData["DeleteError"] != null)
+@if (TempData["Erro"] != null)
 {
-    <h4 style="color:red">@TempData["DeleteError"] </h4>
+    <h4 style="color:red">@TempData["Erro"] </h4>
 }
 
 <table class="table">
