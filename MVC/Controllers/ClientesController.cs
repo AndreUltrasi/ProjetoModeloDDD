@@ -17,7 +17,7 @@ namespace ProjetoModeloDDD.MVC.Controllers
             _clienteApp = clienteApp;
         }
 
-        public ActionResult Inicio()
+        public ActionResult Index()
         {
             var clientesTodos = _clienteApp.ObterTodos();
             var clienteViewModel = Mapper.Map<IEnumerable<Cliente>, IEnumerable<ClienteViewModel>>(clientesTodos);
@@ -45,7 +45,7 @@ namespace ProjetoModeloDDD.MVC.Controllers
             catch (Exception ex)
             {
                 ViewBag.Erro = ex.Message;
-                return RedirectToAction("Inicio");
+                return RedirectToAction("Index");
             }
         }
 
@@ -65,7 +65,7 @@ namespace ProjetoModeloDDD.MVC.Controllers
                     var clienteDomain = Mapper.Map<ClienteViewModel, Cliente>(cliente);
                     _clienteApp.Adicionar(clienteDomain);
 
-                    return RedirectToAction("Inicio");
+                    return RedirectToAction("Index");
                 }
             }
             catch (Exception ex)
@@ -93,7 +93,7 @@ namespace ProjetoModeloDDD.MVC.Controllers
                 var clienteDomain = Mapper.Map<ClienteViewModel, Cliente>(cliente);
                 _clienteApp.Atualizar(clienteDomain);
 
-                return RedirectToAction("Inicio");
+                return RedirectToAction("Index");
             }
 
             return View(cliente);
@@ -118,7 +118,7 @@ namespace ProjetoModeloDDD.MVC.Controllers
             {
                 TempData["DeleteError"] = ex.Message;
             }
-            return RedirectToAction("Inicio");
+            return RedirectToAction("Index");
         }
     }
 }

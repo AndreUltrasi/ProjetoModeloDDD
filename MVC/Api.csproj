@@ -181,7 +181,7 @@
     <Content Include="Views\Home\Contact.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Scripts\jquery-1.10.2.min.map" />
-    <Content Include="Views\Clientes\Inicio.cshtml" />
+    <Content Include="Views\Clientes\Index.cshtml" />
     <Content Include="Views\Clientes\Criar.cshtml" />
     <Content Include="Views\Clientes\Deletar.cshtml" />
     <Content Include="Views\Clientes\Detalhes.cshtml" />

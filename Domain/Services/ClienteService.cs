@@ -40,7 +40,7 @@ namespace ProjetoModeloDDD.Domain.Services
             try
             {
                 var clientesTodos = _clienteRepository.ObterTodos();
-                return _clienteRepository.ObterTodos();
+                return clientesTodos;
             }
             catch (Exception ex)
             {

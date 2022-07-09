@@ -65,7 +65,6 @@ namespace ProjetoModeloDDD.Infra.Data.Repositories
 
         public void Remover(Cliente cliente)
         {
-            throw new Exception("erro Genérico");
             Db.Set<Cliente>().Remove(cliente);
             Db.SaveChanges();
         }
