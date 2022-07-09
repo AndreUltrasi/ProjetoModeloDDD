@@ -1,33 +1,34 @@
-﻿using System.Collections.Generic;
-using System.Web.Mvc;
-using AutoMapper;
-using ProjetoModeloDDD.Application.Interface;
+﻿using AutoMapper;
 using ProjetoModeloDDD.Domain.Entities;
+using ProjetoModeloDDD.Domain.Interfaces.Services;
 using ProjetoModeloDDD.MVC.ViewModels;
+using System.Collections.Generic;
+using System.Web.Mvc;
 
 namespace ProjetoModeloDDD.MVC.Controllers
 {
     public class ProdutosController : Controller
     {
-        private readonly IProdutoAppService _produtoApp;
-        private readonly IClienteAppService _clienteApp;
+        private readonly IProdutoService _produtoService;
+        private readonly IClienteService _clienteService;
 
-        public ProdutosController(IProdutoAppService produtoApp, IClienteAppService clienteApp)
+        public ProdutosController(IProdutoService produtoApp, IClienteService clienteApp)
         {
-            _produtoApp = produtoApp;
-            _clienteApp = clienteApp;
+            _produtoService = produtoApp;
+            _clienteService = clienteApp;
         }
 
         public ActionResult Index()
         {
-            var produtoViewModel = Mapper.Map<IEnumerable<Produto>, IEnumerable<ProdutoViewModel>>(_produtoApp.GetAll());
+            var produtosTodos = _produtoService.ObterTodos();
+            var produtoViewModel = Mapper.Map<IEnumerable<Produto>, IEnumerable<ProdutoViewModel>>(produtosTodos);
 
             return View(produtoViewModel);
         }
 
         public ActionResult Details(int id)
         {
-            var produto = _produtoApp.GetById(id);
+            var produto = _produtoService.ObterPorId(id);
             var produtoViewModel = Mapper.Map<Produto, ProdutoViewModel>(produto);
 
             return View(produtoViewModel);
@@ -35,7 +36,8 @@ namespace ProjetoModeloDDD.MVC.Controllers
 
         public ActionResult Create()
         {
-            ViewBag.ClienteId = new SelectList(_clienteApp.GetAll(), "ClienteId", "Nome");
+            var clientesTodos = _clienteService.ObterTodos();
+            ViewBag.ClienteId = new SelectList(clientesTodos, "ClienteId", "Nome");
             return View();
         }
 
@@ -46,21 +48,22 @@ namespace ProjetoModeloDDD.MVC.Controllers
             if (ModelState.IsValid)
             {
                 var produtoDomain = Mapper.Map<ProdutoViewModel, Produto>(produto);
-                _produtoApp.Add(produtoDomain);
+                _produtoService.Adicionar(produtoDomain);
 
                 return RedirectToAction("Index");
             }
 
-            ViewBag.ClienteId = new SelectList(_clienteApp.GetAll(), "ClienteId", "Nome", produto.ClienteId);
+            var clientesTodos = _clienteService.ObterTodos();
+            ViewBag.ClienteId = new SelectList(clientesTodos, "ClienteId", "Nome", produto.ClienteId);
             return View(produto);
         }
 
         public ActionResult Edit(int id)
         {
-            var produto = _produtoApp.GetById(id);
+            var produto = _produtoService.ObterPorId(id);
             var produtoViewModel = Mapper.Map<Produto, ProdutoViewModel>(produto);
 
-            ViewBag.ClienteId = new SelectList(_clienteApp.GetAll(), "ClienteId", "Nome", produtoViewModel.ClienteId);
+            ViewBag.ClienteId = new SelectList(_clienteService.ObterTodos(), "ClienteId", "Nome", produtoViewModel.ClienteId);
 
             return View(produtoViewModel);
         }
@@ -72,18 +75,20 @@ namespace ProjetoModeloDDD.MVC.Controllers
             if (ModelState.IsValid)
             {
                 var produtoDomain = Mapper.Map<ProdutoViewModel, Produto>(produto);
-                _produtoApp.Update(produtoDomain);
+                _produtoService.Atualizar(produtoDomain);
 
                 return RedirectToAction("Index");
             }
 
-            ViewBag.ClienteId = new SelectList(_clienteApp.GetAll(), "ClienteId", "Nome", produto.ClienteId);
+            var clientesTodos = _clienteService.ObterTodos();
+
+            ViewBag.ClienteId = new SelectList(clientesTodos, "ClienteId", "Nome", produto.ClienteId);
             return View(produto);
         }
 
         public ActionResult Delete(int id)
         {
-            var produto = _produtoApp.GetById(id);
+            var produto = _produtoService.ObterPorId(id);
             var produtoViewModel = Mapper.Map<Produto, ProdutoViewModel>(produto);
 
             return View(produtoViewModel);
@@ -93,8 +98,8 @@ namespace ProjetoModeloDDD.MVC.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            var produto = _produtoApp.GetById(id);
-            _produtoApp.Remove(produto);
+            var produto = _produtoService.ObterPorId(id);
+            _produtoService.Remover(produto);
 
             return RedirectToAction("Index");
         }

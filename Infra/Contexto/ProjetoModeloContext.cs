@@ -1,9 +1,9 @@
-﻿using System;
+﻿using ProjetoModeloDDD.Domain.Entities;
+using ProjetoModeloDDD.Infra.Data.EntityConfig;
+using System;
 using System.Data.Entity;
 using System.Data.Entity.ModelConfiguration.Conventions;
 using System.Linq;
-using ProjetoModeloDDD.Domain.Entities;
-using ProjetoModeloDDD.Infra.Data.EntityConfig;
 
 namespace ProjetoModeloDDD.Infra.Data.Contexto
 {

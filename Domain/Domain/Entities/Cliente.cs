@@ -15,7 +15,7 @@ namespace ProjetoModeloDDD.Domain.Entities
 
         public bool ClienteEspecial(Cliente cliente)
         {
-            return cliente.Ativo && DateTime.Now.Year - cliente.DataCadastro.Year >= 5;
+            return cliente.Ativo && (DateTime.Now.Year - cliente.DataCadastro.Year >= 5);
         }
     }
 }

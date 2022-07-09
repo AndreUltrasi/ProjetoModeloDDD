@@ -57,12 +57,11 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repositories\ClienteRepository.cs" />
     <Compile Include="Repositories\ProdutoRepository.cs" />
-    <Compile Include="Repositories\RespositoryBase.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Domain\Domain.csproj">
+    <ProjectReference Include="..\Domain\Core.csproj">
       <Project>{984cb356-b992-441e-bf81-a36d1b30add0}</Project>
-      <Name>Domain</Name>
+      <Name>Core</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup />

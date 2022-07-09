@@ -4,7 +4,7 @@ using ProjetoModeloDDD.Domain.Entities;
 
 namespace ProjetoModeloDDD.Application.Interface
 {
-    public interface IClienteAppService : IAppServiceBase<Cliente>
+    public interface IClienteAppService
     {
         IEnumerable<Cliente> ObterClientesEspeciais();
     }
