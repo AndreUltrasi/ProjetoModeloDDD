@@ -2,6 +2,7 @@
 using ProjetoModeloDDD.Domain.Entities;
 using ProjetoModeloDDD.Domain.Interfaces.Services;
 using ProjetoModeloDDD.MVC.ViewModels;
+using System;
 using System.Collections.Generic;
 using System.Web.Mvc;
 
@@ -16,10 +17,11 @@ namespace ProjetoModeloDDD.MVC.Controllers
             _clienteApp = clienteApp;
         }
 
-        public ActionResult Index()
+        public ActionResult Inicio()
         {
             var clientesTodos = _clienteApp.ObterTodos();
             var clienteViewModel = Mapper.Map<IEnumerable<Cliente>, IEnumerable<ClienteViewModel>>(clientesTodos);
+
             return View(clienteViewModel);
         }
 
@@ -31,35 +33,50 @@ namespace ProjetoModeloDDD.MVC.Controllers
             return View(clienteViewModel);
         }
 
-        public ActionResult Details(int id)
+        public ActionResult Detalhes(int id)
         {
-            var cliente = _clienteApp.ObterPorId(id);
-            var clienteViewModel = Mapper.Map<Cliente, ClienteViewModel>(cliente);
+            try
+            {
+                var cliente = _clienteApp.ObterPorId(id);
+                var clienteViewModel = Mapper.Map<Cliente, ClienteViewModel>(cliente);
 
-            return View(clienteViewModel);
+                return View(clienteViewModel);
+            }
+            catch (Exception ex)
+            {
+                ViewBag.Erro = ex.Message;
+                return RedirectToAction("Inicio");
+            }
         }
 
-        public ActionResult Create()
+        public ActionResult Criar()
         {
             return View();
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(ClienteViewModel cliente)
+        public ActionResult Criar(ClienteViewModel cliente)
         {
-            if (ModelState.IsValid)
+            try
             {
-                var clienteDomain = Mapper.Map<ClienteViewModel, Cliente>(cliente);
-                _clienteApp.Adicionar(clienteDomain);
+                if (ModelState.IsValid)
+                {
+                    var clienteDomain = Mapper.Map<ClienteViewModel, Cliente>(cliente);
+                    _clienteApp.Adicionar(clienteDomain);
 
-                return RedirectToAction("Index");
+                    return RedirectToAction("Inicio");
+                }
+            }
+            catch (Exception ex)
+            {
+                ViewBag.Erro = ex.Message;
             }
 
             return View(cliente);
         }
 
-        public ActionResult Edit(int id)
+        public ActionResult Editar(int id)
         {
             var cliente = _clienteApp.ObterPorId(id);
             var clienteViewModel = Mapper.Map<Cliente, ClienteViewModel>(cliente);
@@ -69,35 +86,39 @@ namespace ProjetoModeloDDD.MVC.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(ClienteViewModel cliente)
+        public ActionResult Editar(ClienteViewModel cliente)
         {
             if (ModelState.IsValid)
             {
                 var clienteDomain = Mapper.Map<ClienteViewModel, Cliente>(cliente);
                 _clienteApp.Atualizar(clienteDomain);
 
-                return RedirectToAction("Index");
+                return RedirectToAction("Inicio");
             }
 
             return View(cliente);
         }
 
-        public ActionResult Delete(int id)
+        public ActionResult Deletar(int id)
         {
             var cliente = _clienteApp.ObterPorId(id);
             var clienteViewModel = Mapper.Map<Cliente, ClienteViewModel>(cliente);
-
             return View(clienteViewModel);
         }
 
-        [HttpPost, ActionName("Delete")]
+        [HttpPost, ActionName("Deletar")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            var cliente = _clienteApp.ObterPorId(id);
-            _clienteApp.Remover(cliente);
-
-            return RedirectToAction("Index");
+            try
+            {
+                _clienteApp.Remover(id);
+            }
+            catch (Exception ex)
+            {
+                TempData["DeleteError"] = ex.Message;
+            }
+            return RedirectToAction("Inicio");
         }
     }
 }

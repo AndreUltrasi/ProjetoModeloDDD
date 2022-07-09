@@ -1,6 +1,7 @@
 ﻿using ProjetoModeloDDD.Domain.Entities;
 using ProjetoModeloDDD.Domain.Interfaces.Repositories;
 using ProjetoModeloDDD.Domain.Interfaces.Services;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -24,25 +25,65 @@ namespace ProjetoModeloDDD.Domain.Services
 
         public Cliente ObterPorId(int id)
         {
-            return _clienteRepository.ObterPorId(id);
+            try
+            {
+                return _clienteRepository.ObterPorId(id);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"Ocorreu um erro ao obter o cliente da base | Erro: {ex.Message}");
+            }
         }
 
         public IEnumerable<Cliente> ObterTodos()
         {
-            return _clienteRepository.ObterTodos();
+            try
+            {
+                var clientesTodos = _clienteRepository.ObterTodos();
+                return _clienteRepository.ObterTodos();
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"Ocorreu um erro ao obter todos os clientes da base | Erro: {ex.Message}");
+            }
         }
 
-        public void Adicionar(Cliente cliente)
+        public bool Adicionar(Cliente cliente)
         {
-            _clienteRepository.Adicionar(cliente);
+            try
+            {
+                _clienteRepository.Adicionar(cliente);
+                return true;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"Ocorreu um erro ao adicionar o cliente na base | Erro: {ex.Message}");
+            }
         }
-        public void Atualizar(Cliente cliente)
+        public bool Atualizar(Cliente cliente)
         {
-            _clienteRepository.Atualizar(cliente);
+            try
+            {
+                _clienteRepository.Atualizar(cliente);
+                return true;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"Ocorreu um erro ao atualizar o cliente na base | Erro: {ex.Message}");
+            }
         }
-        public void Remover(Cliente cliente)
+        public bool Remover(int id)
         {
-            _clienteRepository.Remover(cliente);
+            try
+            {
+                var cliente = _clienteRepository.ObterPorId(id);
+                _clienteRepository.Remover(cliente);
+                return true;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"Ocorreu um erro ao remover o cliente da base | Erro: {ex.Message}");
+            }
         }
     }
 }

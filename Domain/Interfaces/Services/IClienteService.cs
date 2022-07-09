@@ -9,8 +9,8 @@ namespace ProjetoModeloDDD.Domain.Interfaces.Services
         IEnumerable<Cliente> ObterClientesEspeciais();
         Cliente ObterPorId(int id);
         IEnumerable<Cliente> ObterTodos();
-        void Adicionar(Cliente cliente);
-        void Atualizar(Cliente cliente);
-        void Remover(Cliente cliente);
+        bool Adicionar(Cliente cliente);
+        bool Atualizar(Cliente cliente);
+        bool Remover(int id);
     }
 }

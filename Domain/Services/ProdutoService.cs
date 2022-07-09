@@ -2,6 +2,7 @@
 using ProjetoModeloDDD.Domain.Entities;
 using ProjetoModeloDDD.Domain.Interfaces.Repositories;
 using ProjetoModeloDDD.Domain.Interfaces.Services;
+using System;
 using System.Collections.Generic;
 
 namespace ProjetoModeloDDD.Domain.Services
@@ -15,32 +16,73 @@ namespace ProjetoModeloDDD.Domain.Services
             _produtoRepository = produtoRepository;
         }
 
-        public IEnumerable<Produto> BuscarPorNome(string nome)
+        public IEnumerable<Produto> ObterPorNome(string nome)
         {
-            return _produtoRepository.BuscarPorNome(nome);
+            var produto = _produtoRepository.BuscarPorNome(nome);
+            return produto;
         }
 
         public Produto ObterPorId(int id)
         {
-            return _produtoRepository.ObterPorId(id);
+            try
+            {
+                var produto = _produtoRepository.ObterPorId(id);
+                return produto;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"Ocorreu um erro ao obter o produto da base | Erro: {ex.Message}");
+            }
         }
 
         public IEnumerable<Produto> ObterTodos()
         {
-            return _produtoRepository.ObterTodos();
+            try
+            {
+                var produtosTodos = _produtoRepository.ObterTodos();
+                return produtosTodos;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"Ocorreu um erro ao obter todos os produto da base | Erro: {ex.Message}");
+            }
         }
 
-        public void Adicionar(Produto produto)
+        public bool Adicionar(Produto produto)
         {
-            _produtoRepository.Adicionar(produto);
+            try
+            {
+                _produtoRepository.Adicionar(produto);
+                return true;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"Ocorreu um erro ao adicionar o produto na base | Erro: {ex.Message}");
+            }
         }
-        public void Atualizar(Produto produto)
+        public bool Atualizar(Produto produto)
         {
-            _produtoRepository.Atualizar(produto);
+            try
+            {
+                _produtoRepository.Atualizar(produto);
+                return true;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"Ocorreu um erro ao obter o produto da base | Erro: {ex.Message}");
+            }
         }
-        public void Remover(Produto produto)
+        public bool Remover(Produto produto)
         {
-            _produtoRepository.Remover(produto);
+            try
+            {
+                _produtoRepository.Remover(produto);
+                return true;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"Ocorreu um erro ao remover o produto da base | Erro: {ex.Message}");
+            }
         }
     }
 }

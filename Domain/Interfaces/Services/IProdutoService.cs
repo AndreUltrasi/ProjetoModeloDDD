@@ -5,11 +5,11 @@ namespace ProjetoModeloDDD.Domain.Interfaces.Services
 {
     public interface IProdutoService
     {
-        IEnumerable<Produto> BuscarPorNome(string nome);
+        IEnumerable<Produto> ObterPorNome(string nome);
         Produto ObterPorId(int id);
         IEnumerable<Produto> ObterTodos();
-        void Adicionar(Produto produto);
-        void Atualizar(Produto produto);
-        void Remover(Produto produto);
+        bool Adicionar(Produto produto);
+        bool Atualizar(Produto produto);
+        bool Remover(Produto produto);
     }
 }

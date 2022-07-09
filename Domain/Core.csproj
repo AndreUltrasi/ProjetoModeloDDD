@@ -31,6 +31,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="Commons\StringUtils.cs" />
     <Compile Include="Domain\Entities\Cliente.cs" />
     <Compile Include="Domain\Entities\Produto.cs" />
     <Compile Include="Interfaces\Repositories\IClienteRepository.cs" />
