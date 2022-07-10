@@ -37,3 +37,4 @@ Version.cpp
 /ProjetoModeloDDD.MVC/App_Data/ProjetoModeloDDD.mdf
 *.mdf
 *.ldf
+*.v1
