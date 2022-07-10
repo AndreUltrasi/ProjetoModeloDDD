@@ -10,11 +10,11 @@ namespace Infra.Contexto
         { }
 
 
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        {
-            var connection = @"Server=(localdb)\mssqllocaldb;Database=ProjetoModeloDDD;Trusted_Connection=True;";
-            optionsBuilder.UseSqlServer(connection);
-        }
+        //protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        //{
+        //    var connection = @"Server=(localdb)\mssqllocaldb;Database=ProjetoModeloDDD;Trusted_Connection=True;";
+        //    optionsBuilder.UseSqlServer(connection);
+        //}
         public DbSet<Cliente>? Clientes { get; set; }
         public DbSet<Produto>? Produtos { get; set; }
 

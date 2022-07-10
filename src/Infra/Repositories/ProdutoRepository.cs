@@ -27,9 +27,12 @@ namespace Infra.Repositories
 
         public Produto ObterPorId(int id)
         {
-            var entity = _context.Set<Produto>().Find(id);
+            var produto = _context.Set<Produto>().Find(id);
 
-            return entity;
+            var clienteProduto = _context.Set<Cliente>().First(s => s.ClienteId == produto.ClienteId);
+            produto.Cliente = clienteProduto;
+
+            return produto;
         }
 
         public IEnumerable<Produto> ObterTodos()
@@ -47,6 +50,8 @@ namespace Infra.Repositories
 
         public void Atualizar(Produto produto)
         {
+            var clienteProduto = _context.Set<Cliente>().First(s => s.ClienteId == produto.ClienteId);
+            produto.Cliente = clienteProduto;
             _context.Entry(produto).State = EntityState.Modified;
             _context.SaveChanges();
         }

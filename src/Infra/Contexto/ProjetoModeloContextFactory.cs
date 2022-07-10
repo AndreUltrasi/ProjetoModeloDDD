@@ -1,14 +1,19 @@
-﻿using Infra.Contexto;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Design;
+using Microsoft.Extensions.Configuration;
+using System.Configuration;
 
+namespace Infra.Contexto;
 public class BloggingContextFactory : IDesignTimeDbContextFactory<ProjetoModeloContext>
 {
     public ProjetoModeloContext CreateDbContext(string[] args)
     {
-        var connection = @"Server=(localdb)\mssqllocaldb;Database=ProjetoModeloDDD;Trusted_Connection=True;";
+        IConfigurationRoot configuration = new ConfigurationBuilder()
+            .AddJsonFile("appsettings.json")
+            .Build();
+
         var optionsBuilder = new DbContextOptionsBuilder<ProjetoModeloContext>();
-        optionsBuilder.UseSqlServer(connection);
+        optionsBuilder.UseSqlServer(configuration.GetConnectionString("SqlDatabase"));
 
         return new ProjetoModeloContext(optionsBuilder.Options);
     }

@@ -10,17 +10,15 @@ namespace Mvc.DependencyInjection
 {
     public static class DependencyInjection
     {
-        public static void ConfigureServices(this IServiceCollection services)
+        public static void ConfigureServices(this IServiceCollection services, IConfiguration configuration)
         {
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
             services.AddScoped<IProdutoService, ProdutoService>();
             services.AddScoped<IClienteService, ClienteService>();
             services.AddScoped<IClienteRepository, ClienteRepository>();
             services.AddScoped<IProdutoRepository, ProdutoRepository>();
-
-            var connection = @"Server=(localdb)\mssqllocaldb;Database=ProjetoModeloDDD;Trusted_Connection=True;";
-
-            services.AddDbContext<ProjetoModeloContext>(options => options.UseSqlServer(connection));
+            
+            services.AddDbContext<ProjetoModeloContext>(options => options.UseSqlServer(configuration.GetConnectionString("SqlDatabase")));
         }
     }
 }

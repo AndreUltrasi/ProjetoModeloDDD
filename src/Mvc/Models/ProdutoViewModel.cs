@@ -5,6 +5,10 @@ namespace Mvc.Models
 {
     public class ProdutoViewModel
     {
+        public ProdutoViewModel()
+        {
+
+        }
         [Key]
         public int ProdutoId { get; set; }
 
