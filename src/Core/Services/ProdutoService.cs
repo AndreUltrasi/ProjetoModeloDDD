@@ -1,13 +1,14 @@
 ﻿using Core.Domain.Entities;
+using Core.Interfaces.Repositories;
 using Core.Interfaces.Services;
 
 namespace Core.Services
 {
     public class ProdutoService : IProdutoService
     {
-        private readonly Interfaces.Repositories.IProdutoRepository _produtoRepository;
+        private readonly IProdutoRepository _produtoRepository;
 
-        public ProdutoService(Interfaces.Repositories.IProdutoRepository produtoRepository)
+        public ProdutoService(IProdutoRepository produtoRepository)
         {
             _produtoRepository = produtoRepository;
         }

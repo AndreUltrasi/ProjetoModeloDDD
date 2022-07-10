@@ -37,8 +37,7 @@ namespace Core.Services
             try
             {
                 var clientesTodos = _clienteRepository.ObterTodos();
-                //return clientesTodos;
-                return new List<Cliente>();
+                return clientesTodos;
             }
             catch (Exception ex)
             {

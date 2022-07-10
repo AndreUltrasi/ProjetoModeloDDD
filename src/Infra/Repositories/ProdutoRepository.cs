@@ -2,12 +2,13 @@
 using Core.Interfaces.Repositories;
 using Infra.Contexto;
 using Microsoft.EntityFrameworkCore;
+using System.Linq;
 
 namespace Infra.Repositories
 {
     public class ProdutoRepository : IProdutoRepository
     {
-        private readonly ProjetoModeloContext? _context;
+        private readonly ProjetoModeloContext _context;
         public ProdutoRepository(ProjetoModeloContext context)
         {
             _context = context;
@@ -18,22 +19,30 @@ namespace Infra.Repositories
             return _context.Produtos.Where(p => p.Nome == nome);
         }
 
-        public void Adicionar(Produto obj)
+        public void Adicionar(Produto produto)
         {
-            _context.Set<Produto>().Add(obj);
+            _context.Set<Produto>().Add(produto);
             _context.SaveChanges();
         }
 
         public Produto ObterPorId(int id)
         {
             var entity = _context.Set<Produto>().Find(id);
+
             return entity;
         }
 
         public IEnumerable<Produto> ObterTodos()
         {
-            var todosProdutos = _context.Set<Produto>().ToList();
-            return todosProdutos;
+            var produtos = _context.Set<Produto>().ToList();
+
+            foreach(var produto in produtos)
+            {
+                var clientesProduto = _context.Set<Cliente>().First(s => s.ClienteId == produto.ClienteId);
+                produto.Cliente = clientesProduto;
+            }
+
+            return produtos;
         }
 
         public void Atualizar(Produto produto)

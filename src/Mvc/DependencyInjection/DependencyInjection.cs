@@ -1,9 +1,10 @@
-﻿using Microsoft.EntityFrameworkCore;
-using Core.Interfaces.Repositories;
+﻿using Core.Interfaces.Repositories;
 using Core.Interfaces.Services;
 using Core.Services;
 using Infra.Contexto;
 using Infra.Repositories;
+using Microsoft.EntityFrameworkCore;
+using Mvc.Models;
 
 namespace Mvc.DependencyInjection
 {

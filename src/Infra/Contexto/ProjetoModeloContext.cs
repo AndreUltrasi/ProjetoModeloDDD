@@ -1,5 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
-using Core.Domain.Entities;
+﻿using Core.Domain.Entities;
+using Microsoft.EntityFrameworkCore;
 
 namespace Infra.Contexto
 {

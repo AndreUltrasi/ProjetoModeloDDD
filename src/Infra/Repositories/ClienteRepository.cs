@@ -7,7 +7,7 @@ namespace Infra.Repositories
 {
     public class ClienteRepository : IClienteRepository
     {
-        private readonly ProjetoModeloContext? _context;
+        private readonly ProjetoModeloContext _context;
         public ClienteRepository(ProjetoModeloContext context)
         {
             _context = context;
@@ -27,6 +27,11 @@ namespace Infra.Repositories
             if (clienteJaExistente != null)
             {
                 throw new ArgumentException("Já existe um cliente com este nome !");
+            }
+
+            if (cliente.DataCadastro == default(DateTime))
+            {
+                cliente.DataCadastro = DateTime.Now;
             }
 
             _context.Set<Cliente>().Add(cliente);

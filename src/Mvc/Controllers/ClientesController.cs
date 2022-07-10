@@ -2,6 +2,7 @@
 using Core.Domain.Entities;
 using Core.Interfaces.Services;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Filters;
 using Mvc.Models;
 
 namespace Mvc.Controllers
@@ -17,15 +18,6 @@ namespace Mvc.Controllers
             _clienteApp = clienteApp;
             _mapper = mapper;
         }
-
-        //protected override void OnException(ExceptionContext filterContext)
-        //{
-        //    TempData["Erro"] = filterContext.Exception.Message;
-
-        //    //filterContext.Result = new RedirectToRouteResult(
-        //    //                           new RouteValueDictionary(new { controller = "Clientes", action = "Index" }));
-
-        //}
 
         public ActionResult Index()
         {
@@ -43,7 +35,7 @@ namespace Mvc.Controllers
             return View(clienteViewModel);
         }
 
-        public ActionResult Detalhes(int id)
+        public ActionResult Details(int id)
         {
             var cliente = _clienteApp.ObterPorId(id);
             var clienteViewModel = _mapper.Map<Cliente, ClienteViewModel>(cliente);
@@ -51,14 +43,14 @@ namespace Mvc.Controllers
             return View(clienteViewModel);
         }
 
-        public ActionResult Criar()
+        public ActionResult Create()
         {
             return View();
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Criar(ClienteViewModel cliente)
+        public ActionResult Create(ClienteViewModel cliente)
         {
             if (ModelState.IsValid)
             {
@@ -71,7 +63,7 @@ namespace Mvc.Controllers
             return View(cliente);
         }
 
-        public ActionResult Editar(int id)
+        public ActionResult Edit(int id)
         {
             var cliente = _clienteApp.ObterPorId(id);
             var clienteViewModel = _mapper.Map<Cliente, ClienteViewModel>(cliente);
@@ -81,7 +73,7 @@ namespace Mvc.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Editar(ClienteViewModel cliente)
+        public ActionResult Edit(ClienteViewModel cliente)
         {
             if (ModelState.IsValid)
             {
@@ -94,14 +86,14 @@ namespace Mvc.Controllers
             return View(cliente);
         }
 
-        public ActionResult Deletar(int id)
+        public ActionResult Delete(int id)
         {
             var cliente = _clienteApp.ObterPorId(id);
             var clienteViewModel = _mapper.Map<Cliente, ClienteViewModel>(cliente);
             return View(clienteViewModel);
         }
 
-        [HttpPost, ActionName("Deletar")]
+        [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
