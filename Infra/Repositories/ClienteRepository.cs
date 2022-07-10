@@ -1,41 +1,41 @@
-﻿using ProjetoModeloDDD.Domain.Commons;
-using ProjetoModeloDDD.Domain.Entities;
-using ProjetoModeloDDD.Domain.Interfaces.Repositories;
-using ProjetoModeloDDD.Infra.Data.Contexto;
-using System;
-using System.Collections.Generic;
-using System.Data.Entity;
-using System.Linq;
+﻿using ProjetoModeloDDD.Core.Domain.Entities;
+using ProjetoModeloDDD.Core.Interfaces.Repositories;
+using ProjetoModeloDDD.Infra.Contexto;
+using Microsoft.EntityFrameworkCore;
 
-namespace ProjetoModeloDDD.Infra.Data.Repositories
+namespace ProjetoModeloDDD.Infra.Repositories
 {
     public class ClienteRepository : IClienteRepository
     {
-        protected ProjetoModeloContext Db = new ProjetoModeloContext();
+        private readonly ProjetoModeloContext? _context;
+        public ClienteRepository(ProjetoModeloContext context)
+        {
+            _context = context;
+        }
 
         public void Adicionar(Cliente cliente)
         {
-            var emailJaExistente = Db.Set<Cliente>().FirstOrDefault(s => s.Email == cliente.Email);
+            var emailJaExistente = _context.Set<Cliente>().FirstOrDefault(s => s.Email == cliente.Email);
 
-            if(emailJaExistente != null)
+            if (emailJaExistente != null)
             {
                 throw new ArgumentException("Este email já foi cadastrado para um cliente !");
             }
 
-            var clienteJaExistente = Db.Set<Cliente>().ToList().FirstOrDefault(s => s.Nome.RemoveWhitespace() + s.Sobrenome.RemoveWhitespace() == cliente.Nome.RemoveWhitespace() + cliente.Sobrenome.RemoveWhitespace());
+            var clienteJaExistente = _context.Set<Cliente>().ToList().FirstOrDefault(s => s.Nome + s.Sobrenome == cliente.Nome + cliente.Sobrenome);
 
             if (clienteJaExistente != null)
             {
                 throw new ArgumentException("Já existe um cliente com este nome !");
             }
 
-            Db.Set<Cliente>().Add(cliente);
-            Db.SaveChanges();
+            _context.Set<Cliente>().Add(cliente);
+            _context.SaveChanges();
         }
 
         public Cliente ObterPorId(int id)
         {
-            var cliente = Db.Set<Cliente>().Find(id);
+            var cliente = _context.Set<Cliente>().Find(id);
 
             if (cliente == null)
             {
@@ -47,26 +47,26 @@ namespace ProjetoModeloDDD.Infra.Data.Repositories
 
         public IEnumerable<Cliente> ObterTodos()
         {
-            var clientes = Db.Set<Cliente>().ToList();
+            var clientes = _context.Set<Cliente>().ToList();
 
             return clientes;
         }
 
         public void Atualizar(Cliente cliente)
         {
-            Db.Entry(cliente).State = EntityState.Modified;
-            Db.SaveChanges();
+            _context.Entry(cliente).State = EntityState.Modified;
+            _context.SaveChanges();
         }
 
         public void Remover(Cliente cliente)
         {
-            Db.Set<Cliente>().Remove(cliente);
-            Db.SaveChanges();
+            _context.Set<Cliente>().Remove(cliente);
+            _context.SaveChanges();
         }
 
         public IEnumerable<Cliente> BuscarPorNome(string nome)
         {
-            var clientes = Db.Set<Cliente>().Where(s => $"{s.Nome} {s.Sobrenome}".Contains(nome));
+            var clientes = _context.Set<Cliente>().Where(s => $"{s.Nome} {s.Sobrenome}".Contains(nome));
 
             if (!clientes.Any())
             {

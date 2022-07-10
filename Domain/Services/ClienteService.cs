@@ -10,6 +10,7 @@ namespace ProjetoModeloDDD.Domain.Services
     public class ClienteService : IClienteService
     {
         private readonly IClienteRepository _clienteRepository;
+        //private readonly IMapper _mapper;
 
         public ClienteService(IClienteRepository clienteRepository)
         {
