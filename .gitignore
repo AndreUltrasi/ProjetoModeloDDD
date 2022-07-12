@@ -38,3 +38,8 @@ Version.cpp
 *.mdf
 *.ldf
 *.v1
+*.v2
+*.vsidx
+*.lock
+*.testlog
+*.manifest
