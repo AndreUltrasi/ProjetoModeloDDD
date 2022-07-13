@@ -5,6 +5,7 @@ using Core.Interfaces.Repositories;
 using Core.Services;
 using FluentAssertions;
 using Moq;
+using Mvc.Controllers;
 using Mvc.Models;
 using Xunit;
 
@@ -13,13 +14,13 @@ namespace UnitTests
     public class ClientesControllerTests
     {
         private readonly Mock<IMapper> _mapper;
-        private readonly Mock<IClienteRepository> _clienteRepository;
-        private readonly ClienteService _clienteService;
+        private readonly Mock<ClienteService> _clienteService;
+        private readonly ClientesController _clientesController;
         public ClientesControllerTests()
         {
             _mapper = new Mock<IMapper>();
-            _clienteRepository = new Mock<IClienteRepository>();
-            _clienteService = new ClienteService(_clienteRepository.Object);
+            _clienteService = new Mock<ClienteService>();
+            _clientesController = new ClientesController(_clienteService.Object, _mapper.Object);
         }
         [Fact(DisplayName = "Mapper.Map >> Should Sucess >> When Mapping Produto To ProdutoViewModel")]
         public void ClientesController()
@@ -45,6 +46,8 @@ namespace UnitTests
             };
 
             _mapper.Setup(s => s.Map<Produto, ProdutoViewModel>(It.IsAny<Produto>())).Returns(produtoViewModel);
+
+            var retorno = _clientesController.Index();
 
             produto.Should().BeEquivalentTo(produtoViewModel);
         }

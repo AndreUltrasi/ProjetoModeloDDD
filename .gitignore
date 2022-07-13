@@ -43,3 +43,5 @@ Version.cpp
 *.lock
 *.testlog
 *.manifest
+*.v2
+*.v1

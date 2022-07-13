@@ -16,7 +16,7 @@ namespace Core.Services
         public IEnumerable<Cliente> ObterClientesEspeciais()
         {
             var clientesTodos = _clienteRepository.ObterTodos();
-            var clientesEspeciais = clientesTodos.Where(s => s.ClienteEspecial(s));
+            var clientesEspeciais = clientesTodos.Where(s => s.ClienteEspecial());
             return clientesEspeciais;
         }
 
