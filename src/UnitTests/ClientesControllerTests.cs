@@ -1,7 +1,6 @@
 ﻿using AutoBogus;
 using AutoMapper;
 using Core.Domain.Entities;
-using Core.Interfaces.Repositories;
 using Core.Services;
 using FluentAssertions;
 using Moq;

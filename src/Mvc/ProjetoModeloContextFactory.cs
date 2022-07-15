@@ -1,7 +1,6 @@
 ﻿using Infra.Contexto;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Design;
-using System.Configuration;
 
 public class BloggingContextFactory : IDesignTimeDbContextFactory<ProjetoModeloContext>
 {

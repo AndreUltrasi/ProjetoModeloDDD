@@ -2,7 +2,6 @@
 using Core.Domain.Entities;
 using Core.Interfaces.Services;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Filters;
 using Mvc.Models;
 
 namespace Mvc.Controllers

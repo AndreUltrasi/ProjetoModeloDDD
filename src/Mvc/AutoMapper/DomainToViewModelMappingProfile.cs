@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
-using Mvc.Models;
 using Core.Domain.Entities;
+using Mvc.Models;
 
 namespace ProjetoModeloDDD.Mvc.AutoMapper
 {

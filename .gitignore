@@ -45,3 +45,5 @@ Version.cpp
 *.manifest
 *.v2
 *.v1
+*.dbtcache.v2
+*.dbtcache

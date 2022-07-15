@@ -4,7 +4,6 @@ using Core.Services;
 using Infra.Contexto;
 using Infra.Repositories;
 using Microsoft.EntityFrameworkCore;
-using Mvc.Models;
 
 namespace Mvc.DependencyInjection
 {
@@ -17,7 +16,7 @@ namespace Mvc.DependencyInjection
             services.AddScoped<IClienteService, ClienteService>();
             services.AddScoped<IClienteRepository, ClienteRepository>();
             services.AddScoped<IProdutoRepository, ProdutoRepository>();
-            
+
             services.AddDbContext<ProjetoModeloContext>(options => options.UseSqlServer(configuration.GetConnectionString("SqlDatabase")));
         }
     }

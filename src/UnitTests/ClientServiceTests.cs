@@ -1,5 +1,4 @@
 ﻿using AutoBogus;
-using Bogus;
 using Core.Domain.Entities;
 using Core.Interfaces.Repositories;
 using Core.Services;

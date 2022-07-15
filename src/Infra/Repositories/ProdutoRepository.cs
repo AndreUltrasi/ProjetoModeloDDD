@@ -2,7 +2,6 @@
 using Core.Interfaces.Repositories;
 using Infra.Contexto;
 using Microsoft.EntityFrameworkCore;
-using System.Linq;
 
 namespace Infra.Repositories
 {
@@ -39,7 +38,7 @@ namespace Infra.Repositories
         {
             var produtos = _context.Set<Produto>().ToList();
 
-            foreach(var produto in produtos)
+            foreach (var produto in produtos)
             {
                 var clientesProduto = _context.Set<Cliente>().First(s => s.ClienteId == produto.ClienteId);
                 produto.Cliente = clientesProduto;
