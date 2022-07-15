@@ -1,6 +1,6 @@
 ﻿using Core.Interfaces.Repositories;
-using Core.Interfaces.Services;
-using Core.Services;
+using Core.Interfaces.UseCases;
+using Core.UseCases;
 using Infra.Contexto;
 using Infra.Repositories;
 using Microsoft.EntityFrameworkCore;
@@ -12,8 +12,8 @@ namespace Mvc.DependencyInjection
         public static void ConfigureServices(this IServiceCollection services, IConfiguration configuration)
         {
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
-            services.AddScoped<IProdutoService, ProdutoService>();
-            services.AddScoped<IClienteService, ClienteService>();
+            services.AddScoped<IProdutoUseCase, ProdutoUseCase>();
+            services.AddScoped<IClienteUseCase, ClienteUseCase>();
             services.AddScoped<IClienteRepository, ClienteRepository>();
             services.AddScoped<IProdutoRepository, ProdutoRepository>();
 

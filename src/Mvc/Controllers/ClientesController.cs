@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 using Core.Domain.Entities;
-using Core.Interfaces.Services;
+using Core.Interfaces.UseCases;
 using Microsoft.AspNetCore.Mvc;
 using Mvc.Models;
 
@@ -8,19 +8,19 @@ namespace Mvc.Controllers
 {
     public class ClientesController : Controller
     {
-        private readonly IClienteService _clienteApp;
+        private readonly IClienteUseCase _clienteUseCase;
         public readonly IMapper _mapper;
 
-        public ClientesController(IClienteService clienteApp,
+        public ClientesController(IClienteUseCase clienteUseCase,
                                   IMapper mapper)
         {
-            _clienteApp = clienteApp;
+            _clienteUseCase = clienteUseCase;
             _mapper = mapper;
         }
 
         public ActionResult Index()
         {
-            var clientesTodos = _clienteApp.ObterTodos();
+            var clientesTodos = _clienteUseCase.ObterTodos();
             var clienteViewModel = _mapper.Map<IEnumerable<Cliente>, IEnumerable<ClienteViewModel>>(clientesTodos);
 
             return View(clienteViewModel);
@@ -28,7 +28,7 @@ namespace Mvc.Controllers
 
         public ActionResult Especiais()
         {
-            var clientesEspeciais = _clienteApp.ObterClientesEspeciais();
+            var clientesEspeciais = _clienteUseCase.ObterClientesEspeciais();
             var clienteViewModel = _mapper.Map<IEnumerable<Cliente>, IEnumerable<ClienteViewModel>>(clientesEspeciais);
 
             return View(clienteViewModel);
@@ -36,7 +36,7 @@ namespace Mvc.Controllers
 
         public ActionResult Details(int id)
         {
-            var cliente = _clienteApp.ObterPorId(id);
+            var cliente = _clienteUseCase.ObterPorId(id);
             var clienteViewModel = _mapper.Map<Cliente, ClienteViewModel>(cliente);
 
             return View(clienteViewModel);
@@ -54,7 +54,7 @@ namespace Mvc.Controllers
             if (ModelState.IsValid)
             {
                 var clienteDomain = _mapper.Map<ClienteViewModel, Cliente>(cliente);
-                _clienteApp.Adicionar(clienteDomain);
+                _clienteUseCase.Adicionar(clienteDomain);
 
                 return RedirectToAction("Index");
             }
@@ -64,7 +64,7 @@ namespace Mvc.Controllers
 
         public ActionResult Edit(int id)
         {
-            var cliente = _clienteApp.ObterPorId(id);
+            var cliente = _clienteUseCase.ObterPorId(id);
             var clienteViewModel = _mapper.Map<Cliente, ClienteViewModel>(cliente);
 
             return View(clienteViewModel);
@@ -77,7 +77,7 @@ namespace Mvc.Controllers
             if (ModelState.IsValid)
             {
                 var clienteDomain = _mapper.Map<ClienteViewModel, Cliente>(cliente);
-                _clienteApp.Atualizar(clienteDomain);
+                _clienteUseCase.Atualizar(clienteDomain);
 
                 return RedirectToAction("Index");
             }
@@ -87,7 +87,7 @@ namespace Mvc.Controllers
 
         public ActionResult Delete(int id)
         {
-            var cliente = _clienteApp.ObterPorId(id);
+            var cliente = _clienteUseCase.ObterPorId(id);
             var clienteViewModel = _mapper.Map<Cliente, ClienteViewModel>(cliente);
             return View(clienteViewModel);
         }
@@ -96,7 +96,7 @@ namespace Mvc.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            _clienteApp.Remover(id);
+            _clienteUseCase.Remover(id);
             return RedirectToAction("Index");
         }
     }

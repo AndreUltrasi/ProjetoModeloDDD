@@ -1,21 +1,21 @@
 ﻿using AutoBogus;
 using Core.Domain.Entities;
 using Core.Interfaces.Repositories;
-using Core.Services;
+using Core.UseCases;
 using FluentAssertions;
 using Moq;
 using Xunit;
 
 namespace UnitTests
 {
-    public class ClientServiceTests
+    public class ClienteUseCaseTests
     {
         private readonly Mock<IClienteRepository> _clienteRepository;
-        private readonly ClienteService _clienteService;
-        public ClientServiceTests()
+        private readonly ClienteUseCase _clienteUseCase;
+        public ClienteUseCaseTests()
         {
             _clienteRepository = new Mock<IClienteRepository>();
-            _clienteService = new ClienteService(_clienteRepository.Object);
+            _clienteUseCase = new ClienteUseCase(_clienteRepository.Object);
         }
         [Fact]
         public void Adicionar_ShouldSucess_WhenAddingClienteToDatabase()
@@ -24,7 +24,7 @@ namespace UnitTests
             var cliente = new AutoFaker<Cliente>().Generate();
 
             //Act
-            var retorno = _clienteService.Adicionar(cliente);
+            var retorno = _clienteUseCase.Adicionar(cliente);
 
             //Assert
             retorno.Should().Be(true);
@@ -43,7 +43,7 @@ namespace UnitTests
             var cliente = new AutoFaker<Cliente>().Generate();
 
             //Act
-            var retorno = _clienteService.Atualizar(cliente);
+            var retorno = _clienteUseCase.Atualizar(cliente);
 
             //Assert
             retorno.Should().Be(true);
@@ -63,7 +63,7 @@ namespace UnitTests
             _clienteRepository.Setup(s => s.ObterPorId(It.IsAny<int>())).Returns(cliente);
 
             //Act
-            var retorno = _clienteService.Remover(cliente.ClienteId);
+            var retorno = _clienteUseCase.Remover(cliente.ClienteId);
 
             //Assert
             retorno.Should().Be(true);
@@ -84,7 +84,7 @@ namespace UnitTests
             _clienteRepository.Setup(s => s.ObterTodos()).Returns(clientes);
 
             //Act
-            var retorno = _clienteService.ObterTodos();
+            var retorno = _clienteUseCase.ObterTodos();
 
             //Assert
             retorno.Should().BeEquivalentTo(clientes);
@@ -119,7 +119,7 @@ namespace UnitTests
             _clienteRepository.Setup(s => s.ObterTodos()).Returns(clientes);
 
             //Act
-            var retorno = _clienteService.ObterClientesEspeciais();
+            var retorno = _clienteUseCase.ObterClientesEspeciais();
 
             //Assert
             retorno.Should().BeEquivalentTo(clientesMaioresDe18);
