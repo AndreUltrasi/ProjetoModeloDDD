@@ -17,7 +17,7 @@ namespace UnitTests
             _clienteRepository = new Mock<IClienteRepository>();
             _clienteUseCase = new ClienteUseCase(_clienteRepository.Object);
         }
-        [Fact]
+        [Fact(DisplayName = "Adicionar >> Should Sucess >> When Adding Cliente To Database")]
         public void Adicionar_ShouldSucess_WhenAddingClienteToDatabase()
         {
             //Arrange
