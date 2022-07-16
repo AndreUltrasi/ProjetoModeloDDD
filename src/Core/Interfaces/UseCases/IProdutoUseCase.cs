@@ -1,8 +1,8 @@
 ﻿using Core.Domain.Entities;
 
-namespace Core.Interfaces.Services
+namespace Core.Interfaces.UseCases
 {
-    public interface IProdutoService
+    public interface IProdutoUseCase
     {
         IEnumerable<Produto> ObterPorNome(string nome);
         Produto ObterPorId(int id);
@@ -10,5 +10,6 @@ namespace Core.Interfaces.Services
         bool Adicionar(Produto produto);
         bool Atualizar(Produto produto);
         bool Remover(Produto produto);
+        IEnumerable<Cliente> ObterTodosClientes();
     }
 }

@@ -1,8 +1,8 @@
 ﻿using Core.Domain.Entities;
 
-namespace Core.Interfaces.Services
+namespace Core.Interfaces.UseCases
 {
-    public interface IClienteService
+    public interface IClienteUseCase
     {
         IEnumerable<Cliente> ObterClientesEspeciais();
         Cliente ObterPorId(int id);

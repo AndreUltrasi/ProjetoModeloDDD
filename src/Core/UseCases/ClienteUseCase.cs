@@ -1,14 +1,14 @@
 ﻿using Core.Domain.Entities;
 using Core.Interfaces.Repositories;
-using Core.Interfaces.Services;
+using Core.Interfaces.UseCases;
 
-namespace Core.Services
+namespace Core.UseCases
 {
-    public class ClienteService : IClienteService
+    public class ClienteUseCase : IClienteUseCase
     {
         private readonly IClienteRepository _clienteRepository;
 
-        public ClienteService(IClienteRepository clienteRepository)
+        public ClienteUseCase(IClienteRepository clienteRepository)
         {
             _clienteRepository = clienteRepository;
         }
@@ -16,7 +16,7 @@ namespace Core.Services
         public IEnumerable<Cliente> ObterClientesEspeciais()
         {
             var clientesTodos = _clienteRepository.ObterTodos();
-            var clientesEspeciais = clientesTodos.Where(s => s.ClienteEspecial(s));
+            var clientesEspeciais = clientesTodos.Where(s => s.ClienteEspecial());
             return clientesEspeciais;
         }
 

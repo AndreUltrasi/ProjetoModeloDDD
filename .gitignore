@@ -38,3 +38,12 @@ Version.cpp
 *.mdf
 *.ldf
 *.v1
+*.v2
+*.vsidx
+*.lock
+*.testlog
+*.manifest
+*.v2
+*.v1
+*.dbtcache.v2
+*.dbtcache

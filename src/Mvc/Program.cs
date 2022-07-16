@@ -1,5 +1,4 @@
 using Mvc.DependencyInjection;
-using Mvc.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Configuration
